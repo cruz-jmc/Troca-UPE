@@ -28,11 +28,40 @@ Para atender aos critérios da disciplina, o sistema contará com um banco de da
 
 ---
 
-## 👥 Integrantes do Projeto
+## 📐 Modelagem Gráfica (Diagramas)
 
-- **Letícia Guardiola de Abreus**
-- **João Marcelo Cruz Coelho**
+_Mentalidade do projeto: Os diagramas serão adicionados nesta seção assim que forem modelados no brModelo/dbdiagram._
+
+### 🔹 Modelo Conceitual (DER)
+
+_Espaço reservado para o Diagrama Entidade-Relacionamento._
+
+### 🔹 Modelo Lógico / Físico
+
+_Espaço reservado para o diagrama das tabelas e chaves (PK/FK)._
 
 ---
 
-_Projeto desenvolvido para a disciplina de Banco de Dados - UPE Garanhuns._
+## 📖 Dicionário de Dados (Exemplo Inicial)
+
+_Abaixo está a estrutura de documentação das tabelas do banco de dados (mínimo de 20 tabelas)._
+
+### 1. Tabela: `usuario`
+
+| Coluna      | Tipo         | Restrição / Regra                      | Descrição                        |
+| :---------- | :----------- | :------------------------------------- | :------------------------------- |
+| **id**      | SERIAL       | PRIMARY KEY                            | Identificador único do usuário   |
+| **nome**    | VARCHAR(100) | NOT NULL                               | Nome completo do estudante       |
+| **email**   | VARCHAR(100) | UNIQUE / CHECK (email LIKE '%@upe.br') | E-mail institucional obrigatório |
+| **curso**   | VARCHAR(50)  | NOT NULL                               | Curso atual do estudante         |
+| **periodo** | INT          | CHECK (periodo BETWEEN 1 AND 12)       | Período acadêmico atual          |
+
+_(Demais tabelas serão documentadas aqui conforme o desenvolvimento do script `Tabelas.sql`)_
+
+---
+
+## ⚙️ Regras de Negócio Automatizadas (Triggers & Procedures)
+
+Seção dedicada para catalogar as automações desenvolvidas diretamente no PostgreSQL.
+
+- \*\*`Trigger 01
