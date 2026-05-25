@@ -1,4 +1,4 @@
-# 🚀 UPE-Troca
+# 🚀 Troca-UPE
 
 > **Marketplace Acadêmico e Sustentável para a UPE Garanhuns**
 
@@ -64,4 +64,47 @@ _(Demais tabelas serão documentadas aqui conforme o desenvolvimento do script `
 
 Seção dedicada para catalogar as automações desenvolvidas diretamente no PostgreSQL.
 
-- \*\*`Trigger 01
+- **`Trigger 01` (Exemplo):** Validação automática de e-mail no cadastro ou atualização de status de reputação.
+- **`Procedure 01` (Exemplo):** Procedimento armazenado para gerar relatório de economia circular acumulada por curso.
+
+---
+
+## 📊 Visões Banco de Dados (Views)
+
+_Seção dedicada para listar as views criadas no arquivo `Views.sql` para simplificar consultas complexas e relatórios._
+
+- **`v_metricas_economia`:** Consolida o total de itens doados/vendidos e calcula o valor estimado de economia gerada para a comunidade da UPE Garanhuns.
+- **`v_anuncios_ativos`:** Lista todos os anúncios que ainda estão disponíveis (filtrando por status, curso e período do anunciante), facilitando a busca no Python.
+- **`v_reputacao_usuarios`:** Exibe a média de avaliações de cada estudante para gerar o ranking de confiabilidade do marketplace.
+
+---
+
+## 🚀 Como Executar o Projeto
+
+Esta seção orienta como configurar e rodar o ambiente de desenvolvimento local (Banco de Dados + Aplicação).
+
+### 📋 Pré-requisitos
+
+Antes de começar, você vai precisar ter instalado em sua máquina:
+
+- [Docker & Docker Compose](https://www.docker.com/)
+- [Python 3.x](https://www.python.org/)
+
+### 🛠️ Passo a Passo
+
+1. **Clonar o repositório:**
+   ```bash
+   git clone [https://github.com/cruz-jmc/ProjetoDB_JM_Leh.git](https://github.com/cruz-jmc/ProjetoDB_JM_Leh.git)
+   cd ProjetoDB_JM_Leh
+   ```
+
+---
+
+## 👥 Integrantes do Projeto
+
+- **Letícia Guardiola de Abreus**
+- **João Marcelo Cruz Coelho**
+
+---
+
+_Projeto desenvolvido para a disciplina de Banco de Dados - UPE Garanhuns._
