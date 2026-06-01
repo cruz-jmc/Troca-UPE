@@ -1,0 +1,5 @@
+CREATE TABLE campus (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL UNIQUE,
+    cidade VARCHAR(50) NOT NULL
+);
