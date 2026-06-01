@@ -1,1 +1,0 @@
-CREATE DATABASE projetodb_jm_leh;
