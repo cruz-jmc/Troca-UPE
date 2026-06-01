@@ -166,4 +166,3 @@ Antes de começar, você vai precisar ter instalado em sua máquina:
 ---
 
 _Projeto desenvolvido para a disciplina de Banco de Dados - UPE Garanhuns._
-oi
