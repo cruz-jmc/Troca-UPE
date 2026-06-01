@@ -4,8 +4,8 @@ CREATE TABLE mensagens (
     id SERIAL PRIMARY KEY,
     texto TEXT NOT NULL,
     enviado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    id_chat INT NOT NULL,
+    id_chat INTEGER NOT NULL,
     FOREIGN KEY (id_chat) REFERENCES chats (id) ON DELETE CASCADE,
-    id_remetente INT NOT NULL,
+    id_remetente INTEGER NOT NULL,
     FOREIGN KEY (id_remetente) REFERENCES usuarios (id) ON DELETE CASCADE
 );
