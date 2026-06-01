@@ -34,37 +34,87 @@ _Mentalidade do projeto: Os diagramas serão adicionados nesta seção assim que
 
 ### 🔹 Modelo Conceitual (DER)
 
-_Espaço reservado para o Diagrama Entidade-Relacionamento._
+_![alt text](<Conceptual model - TROCAupe.png>)
 
 ### 🔹 Modelo Lógico
 
-_Espaço reservado para o diagrama das tabelas e chaves (PK/FK)._
+![alt text](<Logic model - TROCAupe.png>)
 
 ---
 
 ## 📖 Dicionário de Dados (Exemplo Inicial)
 
-_Abaixo está a estrutura de documentação das tabelas do banco de dados (mínimo de 20 tabelas)._
+_Abaixo está a estrutura de documentação das tabelas do banco de dados._
 
 ### 1. Tabela: `campus`
 
-| Coluna      | Tipo         | Restrição / Regra                      | Descrição                        |
-| :---------- | :----------- | :------------------------------------- | :------------------------------- |
-| **id**      | SERIAL       | PRIMARY KEY                            | Identificador único do usuário   |
-| **nome**    | VARCHAR(100) | NOT NULL                               | Nome completo do estudante       |
-| **email**   | VARCHAR(100) | UNIQUE / CHECK (email LIKE '%@upe.br') | E-mail institucional obrigatório |
-| **curso**   | VARCHAR(50)  | NOT NULL                               | Curso atual do estudante         |
-| **periodo** | INT          | CHECK (periodo BETWEEN 1 AND 12)       | Período acadêmico atual          |
+| Coluna      | Tipo         | Restrição / Regra                       | Descrição                        |
+| :---------- | :----------- | :-------------------------------------  | :------------------------------- |
+| **id**      | SERIAL       | PRIMARY KEY                             | Identificador único do campus    |
+| **nome**    | VARCHAR(100) | NOT NULL UNIQUE                         | Nome do campus                   |
+| **cidade**  | VARCHAR(50)  | NOT NULL                                | Cidade onde o campus se localiza |
 
 ### 2. Tabela: `cursos`
 
-| Coluna      | Tipo         | Restrição / Regra                      | Descrição                        |
-| :---------- | :----------- | :------------------------------------- | :------------------------------- |
-| **id**      | SERIAL       | PRIMARY KEY                            | Identificador único do usuário   |
-| **nome**    | VARCHAR(100) | NOT NULL                               | Nome completo do estudante       |
-| **email**   | VARCHAR(100) | UNIQUE / CHECK (email LIKE '%@upe.br') | E-mail institucional obrigatório |
-| **curso**   | VARCHAR(50)  | NOT NULL                               | Curso atual do estudante         |
-| **periodo** | INT          | CHECK (periodo BETWEEN 1 AND 12)       | Período acadêmico atual          |
+| Coluna        | Tipo         | Restrição / Regra                      | Descrição                        |
+| :----------   | :----------- | :------------------------------------- | :--------------------------------|
+| **id**        | SERIAL       | PRIMARY KEY                            | Identificador único do curso     |
+| **nome**      | VARCHAR(100) | NOT NULL                               | Nome do curso                    |
+| **id_campus** | INTEGER      | NOT NULL                               | Identificador do campus          |
+
+### 3. Tabela: `usuarios`
+
+| Coluna                 | Tipo                   | Restrição / Regra                      | Descrição                        |
+| :----------------------| :----------------------| :------------------------------------- | :--------------------------------|
+| **id**                 | SERIAL                 | PRIMARY KEY                            | Identificador único do usuário   |
+| **nome**               | VARCHAR(100)           | NOT NULL                               | Nome completo do estudante       |
+| **email_institucional**| VARCHAR(150)           | NOT NULL UNIQUE                        | E-mail institucional obrigatório |
+| **telefone**           | VARCHAR(50)            | NOT NULL UNIQUE                        | telefone do estudante            |
+| **periodo_atual**      | INTEGER                | NOT NULL                               | Período acadêmico atual          |
+| **status_conta**       | tipo_status_conta(ENUM)| NOT NULL DEFAULT 'Ativo'               | Situação da conta                |
+| **id_curso**           | INTEGER                | NOT NULL                               | Identificador do curso           |
+| **id_campus**          | INTEGER                | NOT NULL                               | Identificador  do campus         |
+
+### 4. Tabela: `produtos`
+
+| Coluna              | Tipo                        | Restrição / Regra                      | Descrição                        |
+| :-------------------| :---------------------------| :------------------------------------- | :------------------------------- |
+| **id**              | SERIAL                      | PRIMARY KEY                            | Identificador único do produto   |
+| **nome**            | VARCHAR(100)                | NOT NULL                               | Nome do produto                  |
+| **descricao**       | TEXT                        | NOT NULL                               | Descrição do produto cadastrado  |
+| **preco**           | DECIMAL(10, 2)              | NOT NULL                               | Preço do produto                 |
+| **categoria**       | tipo_categoria_produto(ENUM)| NOT NULL                               | Categoria do produto             |
+| **condicao**        | tipo_condicao_produto(ENUM) | NOT NULL                               | Estado do produto                |
+| **status**          | tipo_status_produto(ENUM)   | NOT NULL DEFAULT 'Disponivel'          | Situação do produto              |
+| **data_criacao**    | TIMESTAMP                   | NOT NULL DEFAULT CURRENT_TIMESTAMP     | Data exata do cadastro do produto|
+| **data_atualizacao**| TIMESTAMP                   | DEFAULT CURRENT_TIMESTAMP              | Data exsta da atualização        |
+| **id_anunciante**   | INTEGER                     | NOT NULL                               | Identificador do usuário         |
+
+
+### 5. Tabela: `chats`
+
+| Coluna            | Tipo         | Restrição / Regra                      | Descrição                        |
+| :-----------------| :----------- | :------------------------------------- | :------------------------------- |
+| **id**            | SERIAL       | PRIMARY KEY                            | Identificador único do chat      |
+| **data_abertura** | TIMESTAMP    | NOT NULL DEFAULT CURRENT_TIMESTAMP     | Data exata da abertura do chat   |
+| **id_produto**    | INTEGER      | NOT NULL                               | Identificador do produto         |
+| **id_interessado**| INTEGER      | NOT NULL                               | Identificador do usuário         |
+
+### 📌 Regras de Negócio Adicionais (Tabela Chats)
+
+* **Restrição Única (1 Chat por Produto):** A combinação de `id_produto` e `id_interessado` possui uma restrição `UNIQUE`. Isso garante que um usuário interessado só possa iniciar um único chat para um mesmo produto, evitando duplicações de conversas e desorganização.
+* **Exclusão em Cascata (ON DELETE CASCADE):** * Se um **produto** for excluído do sistema, todas as conversas/chats atrelados a ele serão automaticamente apagados.
+  * Se um **usuário** (interessado) deletar sua conta, todos os chats iniciados por ele também serão removidos automaticamente do banco de dados.
+
+### 6. Tabela: `mensagens`
+
+| Coluna          | Tipo         | Restrição / Regra                      | Descrição                        |
+| :---------------| :----------- | :------------------------------------- | :------------------------------- |
+| **id**          | SERIAL       | PRIMARY KEY                            | Identificador único da mensagem  |
+| **texto**       | TEXT         | NOT NULL                               | Conteudo da mensagem             |
+| **enviado_em**  | TIMESTAMP    | NOT NULL DEFAULT CURRENT_TIMESTAMP     | Data exatada do envio da mensagem|
+| **id_chat**     | INTEGER      | NOT NULL                               | Identificador do chat            |
+| **id_remetente**| INTEGER      | NOT NULL                               | Identificador do usuário         |
 
 ---
 
