@@ -1,3 +1,4 @@
+-- Active: 1780006598427@@localhost@5432@projetodb_jm_leh
 CREATE TABLE chats (
     id SERIAL PRIMARY KEY,
     data_abertura TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

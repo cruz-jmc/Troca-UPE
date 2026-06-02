@@ -1,4 +1,4 @@
--- Active: 1779383307242@@127.0.0.1@5432@projetodb_jm_leh
+-- Active: 1780006598427@@localhost@5432@projetodb_jm_leh
 CREATE TYPE tipo_status_conta AS ENUM ('Ativo', 'Inativo', 'Bloqueado');
 -- Primeiro execute essa linha para criar o tipo ENUM, depois execute a criação da tabela que irá utilizar esse tipo.
 

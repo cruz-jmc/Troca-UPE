@@ -1,3 +1,4 @@
+-- Active: 1780006598427@@localhost@5432@projetodb_jm_leh
 CREATE TYPE tipo_categoria_produto AS ENUM ('Livros', 'Eletrodomesticos', 'Moveis', 'Material Escolar', 'Outros');
 
 CREATE TYPE tipo_condicao_produto AS ENUM ('Novo', 'Semi-novo', 'Usado (Otimo Estado)', 'Usado (Marcas de Uso)');
