@@ -1,3 +1,4 @@
+-- Essa Trigger tem a função de atualizar a data de atualização do produto sempre que houver uma alteração nos dados do produto.
 -- Primeiro temos que criar a função que define a ação de atualizar a data.
 CREATE OR REPLACE FUNCTION fn_atualizar_data_alteracao_produto()
 RETURNS TRIGGER AS $$
