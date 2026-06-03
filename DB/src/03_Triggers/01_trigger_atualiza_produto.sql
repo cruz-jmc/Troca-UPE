@@ -1,17 +1,16 @@
--- 1. Criamos a função que define a ação de atualizar a data
+-- Primeiro temos que criar a função que define a ação de atualizar a data.
 CREATE OR REPLACE FUNCTION fn_atualizar_data_alteracao_produto()
 RETURNS TRIGGER AS $$
 BEGIN
-    -- NEW representa a linha que está sendo atualizada com os novos dados
+    -- O NEW representa a linha que está sendo atualizada com os novos dados.
     NEW.data_atualizacao = CURRENT_TIMESTAMP;
     
-    -- Retorna a linha modificada para o banco prosseguir com o salvamento
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
--- 2. Criamos o gatilho que dispara a função SEMPRE que houver um UPDATE
+-- Agora criamos a Trigger que dispara a função sempre que houver um update na tabela produtos.
 CREATE TRIGGER tg_atualiza_data_produto
-BEFORE UPDATE ON produtos
-FOR EACH ROW
+BEFORE UPDATE ON produtos -- Esse BEFORE UPDATE indica que a Trigger será executada antes da atualização dos dados.
+FOR EACH ROW -- Esse FOR EACH ROW indica que a Trigger será executada para cada linha que for atualizada.
 EXECUTE FUNCTION fn_atualizar_data_alteracao_produto();
