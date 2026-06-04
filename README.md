@@ -68,7 +68,7 @@ _Abaixo está a estrutura de documentação das tabelas do banco de dados._
 | **id**                  | SERIAL                  | PRIMARY KEY              | Identificador único do usuário   |
 | **nome**                | VARCHAR(100)            | NOT NULL                 | Nome completo do estudante       |
 | **email_institucional** | VARCHAR(150)            | NOT NULL UNIQUE          | E-mail institucional obrigatório |
-| **telefone**            | VARCHAR(50)             | NOT NULL UNIQUE          | telefone do estudante            |
+| **telefone**            | VARCHAR(50)             | NOT NULL UNIQUE          | Telefone do estudante            |
 | **periodo_atual**       | INTEGER                 | NOT NULL                 | Período acadêmico atual          |
 | **status_conta**        | tipo_status_conta(ENUM) | NOT NULL DEFAULT 'Ativo' | Situação da conta                |
 | **id_curso**            | INTEGER                 | NOT NULL                 | Identificador do curso           |
@@ -86,17 +86,18 @@ _Abaixo está a estrutura de documentação das tabelas do banco de dados._
 | **condicao**         | tipo_condicao_produto(ENUM)  | NOT NULL                           | Estado do produto                 |
 | **status**           | tipo_status_produto(ENUM)    | NOT NULL DEFAULT 'Disponivel'      | Situação do produto               |
 | **data_criacao**     | TIMESTAMP                    | NOT NULL DEFAULT CURRENT_TIMESTAMP | Data exata do cadastro do produto |
-| **data_atualizacao** | TIMESTAMP                    | DEFAULT CURRENT_TIMESTAMP          | Data exsta da atualização         |
+| **data_atualizacao** | TIMESTAMP                    | DEFAULT CURRENT_TIMESTAMP          | Data exata da atualização         |
 | **id_anunciante**    | INTEGER                      | NOT NULL                           | Identificador do usuário          |
 
 ### 5. Tabela: `chats`
 
-| Coluna             | Tipo      | Restrição / Regra                  | Descrição                      |
-| :----------------- | :-------- | :--------------------------------- | :----------------------------- |
-| **id**             | SERIAL    | PRIMARY KEY                        | Identificador único do chat    |
-| **data_abertura**  | TIMESTAMP | NOT NULL DEFAULT CURRENT_TIMESTAMP | Data exata da abertura do chat |
-| **id_produto**     | INTEGER   | NOT NULL                           | Identificador do produto       |
-| **id_interessado** | INTEGER   | NOT NULL                           | Identificador do usuário       |
+| Coluna             | Tipo                         | Restrição / Regra                  | Descrição                      |
+| :----------------- | :----------------------------| :--------------------------------- | :----------------------------- |
+| **id**             | SERIAL                       | PRIMARY KEY                        | Identificador único do chat    |
+| **data_abertura**  | TIMESTAMP                    | NOT NULL DEFAULT CURRENT_TIMESTAMP | Data exata da abertura do chat |
+| **id_produto**     | INTEGER                      | NOT NULL                           | Identificador do produto       |
+| **status**         | tipo_status_produto(ENUM)    | NOT NULL DEFAULT 'Disponivel'      | Situação do chat               |
+| **id_interessado** | INTEGER                      | NOT NULL                           | Identificador do usuário       |
 
 ### 📌 Regras de Negócio Adicionais (Tabela Chats)
 
