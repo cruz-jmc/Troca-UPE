@@ -1,4 +1,4 @@
--- Active: 1780006598427@@localhost@5432@projetodb_jm_leh
+-- Active: 1779383307242@@127.0.0.1@5432@projetodb_jm_leh
 
 CREATE OR REPLACE FUNCTION fn_impede_auto_chat()
 RETURNS TRIGGER AS $$
@@ -16,7 +16,6 @@ BEGIN
     RETURN NEW;
 END; 
 $$ LANGUAGE plpgsql;
-
 
 CREATE TRIGGER tg_impede_auto_chat
 BEFORE INSERT ON chats

@@ -1,4 +1,4 @@
--- Active: 1780006598427@@localhost@5432@projetodb_jm_leh
+-- Active: 1779383307242@@127.0.0.1@5432@projetodb_jm_leh
 CREATE OR REPLACE FUNCTION fn_fecha_chats_produto_vendido()
 RETURNS TRIGGER AS $$
 BEGIN
