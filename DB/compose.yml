@@ -1,21 +1,18 @@
 services:
   postgres-db:
     image: postgres:latest
-    container_name: container_projetos_pessoais
+    container_name: container_troca_upe
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: projetodb_jm_leh
+      POSTGRES_DB: db_troca_upe
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
       # Aqui estamos fazendo o mapeamento dos arquivos SQL para serem executados na inicialização do container,
       # assim, quando o container for iniciado, ele irá executar os scripts SQL presentes nas pastas mapeadas (menos os dados fictícios).
-      - ./src/01_Tabelas:/docker-entrypoint-initdb.d/01_Tabelas
-      - ./src/02_Views:/docker-entrypoint-initdb.d/02_Views
-      - ./src/03_Triggers:/docker-entrypoint-initdb.d/03_Triggers
-      - ./src/04_Procedures:/docker-entrypoint-initdb.d/04_Procedures
+      - ./src:/docker-entrypoint-initdb.d/
 
 volumes:
   postgres_data:
