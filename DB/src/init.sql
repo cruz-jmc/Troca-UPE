@@ -29,3 +29,7 @@
 -- 📁 04. CRIAÇÃO DAS PROCEDURES
 \i /docker-entrypoint-initdb.d/04_Procedures/01_proc_concluir_negociacao.sql
 \i /docker-entrypoint-initdb.d/04_Procedures/02_proc_limpar_anuncios_antigos.sql
+
+-- Inserção de dados obrigatórios para testes e funcionamento do sistema
+\i /docker-entrypoint-initdb.d/05_Dados_ficticios_teste/01_insets_campus.sql
+\i /docker-entrypoint-initdb.d/05_Dados_ficticios_teste/02_inserts_cursos.sql

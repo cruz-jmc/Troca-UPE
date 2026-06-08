@@ -2,19 +2,19 @@
 
 > **Marketplace Acadêmico e Sustentável para a UPE Garanhuns**
 
-O **UPE-Troca** é uma plataforma de marketplace exclusiva para a comunidade acadêmica da Universidade de Pernambuco (UPE) - Campus Garanhuns. O objetivo principal é incentivar a economia circular e facilitar o acesso a materiais de estudo, permitindo que alunos (especialmente veteranos e calouros) possam anunciar, vender, trocar ou doar livros, jalecos, calculadoras científicas, materiais de desenho técnico e outros insumos acadêmicos.
+O **Troca-UPE** é uma plataforma de marketplace exclusiva para a comunidade acadêmica da Universidade de Pernambuco (UPE). O objetivo principal é incentivar a economia circular e facilitar o acesso a materiais de estudo, permitindo que alunos possam anunciar, vender, trocar ou doar livros, jalecos, calculadoras científicas, materiais de desenho técnico e outros insumos acadêmicos entre os diversos campi (Benfica, Garanhuns, etc.).
 
 ---
 
 ## 🛠️ Escopo Técnico & Arquitetura do Banco de Dados
 
-Para atender aos critérios da disciplina, o sistema contará com um banco de dados relacional robusto (PostgreSQL via Docker) e totalmente normalizado, além de implementar regras de negócio automatizadas diretamente no banco.
+Para atender aos exigentes critérios de integridade e automação de sistemas de banco de dados, o projeto conta com uma arquitetura relacional robusta em **PostgreSQL**, isolada via **Docker**, integrada a uma API moderna desenvolvida em **Python (FastAPI)**.
 
 - **Modelagem Completa:** Desenvolvimento dos modelos Conceitual (Diagrama ER), Lógico e Físico.
-- **Camada de Banco de Dados:** Mínimo de 20 tabelas e/ou views + Triggers + Procedures.
-- **Automação:** Uso estratégico de _Triggers_ (Gatilhos para automação e validação) e _Stored Procedures_ (Procedimentos armazenados para consultas complexas e relatórios).
-- **População de Dados:** _Seeders_ dedicados para popular o banco com dados de teste realistas.
-- **Camada de Aplicação:** Integração do banco de dados com testes funcionais utilizando **Python** para comunicação direta com o banco.
+- **Camada de Banco de Dados:** Estrutura normalizada com chaves estrangeiras, restrições exclusivas e tipos enumerados (`ENUM`).
+- **Automação Nativa (PL/pgSQL):** Uso estratégico de _Triggers_ (Gatilhos de automação pós-venda) e _Stored Procedures_ (Procedimentos armazenados para manutenção agendada).
+- **Camada de Visões (Views):** Consultas agregadas e complexas encapsuladas no banco para geração instantânea de relatórios no Dashboard.
+- **Camada de Aplicação:** API RESTful utilizando **FastAPI** e o driver nativo **Psycopg 3** rodando com gerenciamento seguro de transações (`COMMIT`/`ROLLBACK`).
 
 ---
 
@@ -91,13 +91,13 @@ _Abaixo está a estrutura de documentação das tabelas do banco de dados._
 
 ### 5. Tabela: `chats`
 
-| Coluna             | Tipo                         | Restrição / Regra                  | Descrição                      |
-| :----------------- | :----------------------------| :--------------------------------- | :----------------------------- |
-| **id**             | SERIAL                       | PRIMARY KEY                        | Identificador único do chat    |
-| **data_abertura**  | TIMESTAMP                    | NOT NULL DEFAULT CURRENT_TIMESTAMP | Data exata da abertura do chat |
-| **id_produto**     | INTEGER                      | NOT NULL                           | Identificador do produto       |
-| **status**         | tipo_status_produto(ENUM)    | NOT NULL DEFAULT 'Disponivel'      | Situação do chat               |
-| **id_interessado** | INTEGER                      | NOT NULL                           | Identificador do usuário       |
+| Coluna             | Tipo                      | Restrição / Regra                  | Descrição                      |
+| :----------------- | :------------------------ | :--------------------------------- | :----------------------------- |
+| **id**             | SERIAL                    | PRIMARY KEY                        | Identificador único do chat    |
+| **data_abertura**  | TIMESTAMP                 | NOT NULL DEFAULT CURRENT_TIMESTAMP | Data exata da abertura do chat |
+| **id_produto**     | INTEGER                   | NOT NULL                           | Identificador do produto       |
+| **status**         | tipo_status_produto(ENUM) | NOT NULL DEFAULT 'Disponivel'      | Situação do chat               |
+| **id_interessado** | INTEGER                   | NOT NULL                           | Identificador do usuário       |
 
 ### 📌 Regras de Negócio Adicionais (Tabela Chats)
 
@@ -136,32 +136,125 @@ _Seção dedicada para listar as views criadas no arquivo `views.sql` para simpl
 
 ---
 
-## 🚀 Como Executar o Projeto
+## ⚙️ Guia Passo a Passo para Execução do Projeto
 
-Esta seção orienta como configurar e rodar o ambiente de desenvolvimento local (Banco de Dados + Aplicação).
+Siga estritamente as instruções abaixo para configurar o ambiente do banco de dados relacional e inicializar o servidor da aplicação FastAPI.
 
-### 📋 Pré-requisitos
+### 📋 Pré-requisitos Básicos
 
-Antes de começar, você vai precisar ter instalado em sua máquina:
+Antes de rodar os comandos, certifique-se de possuir instalado em seu computador:
 
-- [Docker & Docker Compose](https://www.docker.com/)
-- [Python 3.x](https://www.python.org/)
+- [Docker & Docker Compose Desktop](https://www.docker.com/)
+- [Python 3.12 ou superior](https://www.python.org/)
+- Git configurado no seu sistema
 
-### 🛠️ Passo a Passo
+---
 
-1. **Clonar o repositório:**
-   ```bash
-   git clone [https://github.com/cruz-jmc/ProjetoDB_JM_Leh.git](https://github.com/cruz-jmc/ProjetoDB_JM_Leh.git)
-   cd ProjetoDB_JM_Leh
-   ```
+### 🗺️ Fluxo de Inicialização (Linha de Comando)
+
+#### Passo 1: Clonar o Repositório Oficial
+
+Abra o terminal do seu sistema operacional (ou o terminal embutido do VS Code) e faça o clone do projeto:
+
+```bash
+git clone [https://github.com/cruz-jmc/Troca-UPE.git](https://github.com/cruz-jmc/Troca-UPE.git)
+cd Troca-UPE
+```
+
+#### Passo 2: Levantar a Infraestrutura do Banco de Dados (Docker)
+
+Na raiz do projeto (onde está localizado o arquivo compose.yml), execute o comando para construir e inicializar o container do PostgreSQL em segundo plano:
+
+```bash
+docker compose up -d --build
+```
+
+#### Passo 3: Entrar no Diretório do Servidor da Aplicação
+
+Navegue para a pasta que contém o código-fonte em Python:
+
+```bash
+cd BackEnd
+```
+
+#### Passo 4: Criar e Ativar o Ambiente Virtual (venv)
+
+Crie um ambiente isolado para instalar as dependências do ecossistema FastAPI sem gerar conflitos globais no seu computador.
+
+No Linux / macOS:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+No Windows (Prompt de Comando - CMD):
+
+```DOS
+python -m venv venv
+call venv\Scripts\activate
+```
+
+No Windows (PowerShell):
+
+```PowerShell
+python -m venv venv
+.\venv\Scripts\activate
+```
+
+Nota: Após a ativação, a flag (venv) deve aparecer no início da linha do seu terminal.
+
+#### Passo 5: Instalar as Dependências do Python
+
+Com a venv ativa, atualize o gerenciador de pacotes e instale os módulos listados no arquivo requirements.txt:
+
+```bash
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+Passo 6: Inicializar o Servidor de Aplicação (Uvicorn)
+
+Execute o servidor de desenvolvimento apontando diretamente para o arquivo core da aplicação (src/main.py) com a flag de auto-reload ativa:
+
+```bash
+uvicorn src.main:app --reload
+```
+
+Quando o servidor subir com sucesso, o terminal exibirá as seguintes mensagens em verde:
+
+```Plaintext
+
+INFO: Started server process [228862]
+INFO: Waiting for application startup.
+INFO: Application startup complete.
+INFO: Uvicorn running on [http://127.0.0.1:8000](http://127.0.0.1:8000) (Press CTRL+C to quit)
+```
+
+🕹️ Interface de Testes Interativos (Swagger UI)
+
+A API gera automaticamente uma interface gráfica para você testar todas as operações relacionais do banco de dados de maneira visual.
+
+    Com o terminal do Uvicorn rodando, abra seu navegador e acesse: http://127.0.0.1:8000/docs
+
+    A documentação está segmentada em blocos modulares totalmente integrados ao Banco de Dados:
+
+        Usuários: Cadastro e busca de perfis de estudantes vinculados a cursos e campi específicos.
+
+        Produtos: Cadastro de desapegos e controle de estados físicos e de precificação.
+
+        Chats & Negociações: Abertura de canais diretos entre o anunciante e o aluno interessado.
+
+        Mensagens do Chat: Envio e persistência de históricos de conversas em tempo real.
+
+        Dashboard & Relatórios: Consumo imediato das Views estatísticas (vw_ranking_campi_ativos, vw_demanda_por_categoria, vw_metrica_economia_comunidade, etc.).
 
 ---
 
 ## 👥 Integrantes do Projeto
 
-- **Letícia Guardiola de Abreus**
-- **João Marcelo Cruz Coelho**
+    Letícia Guardiola de Abreus
 
----
+    João Marcelo Cruz Coelho
 
-_Projeto desenvolvido para a disciplina de Banco de Dados - UPE Garanhuns._
+Projeto desenvolvido para a disciplina de Banco de Dados — Universidade de Pernambuco (UPE).

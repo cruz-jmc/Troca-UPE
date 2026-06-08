@@ -1,11 +1,12 @@
--- Active: 1780006598427@@localhost@5432@projetodb_jm_leh
+-- Active: 1779383307242@@127.0.0.1@5432@db_troca_upe
 CREATE OR REPLACE VIEW vw_historico_conversa AS
-SELECT 
-     chats.id, 
-     produtos.nome, 
-     usuarios.nome AS nome_vendedor, 
-     comprador.nome AS nome_comprador
-FROM produtos
-INNER JOIN chats ON produtos.id = chats.id_produto
-INNER JOIN usuarios ON produtos.id_anunciante = usuarios.id
-INNER JOIN usuarios comprador ON chats.id_interessado = usuarios.id;
+SELECT
+    chats.id,
+    produtos.nome,
+    usuarios.nome AS nome_vendedor,
+    comprador.nome AS nome_comprador
+FROM
+    produtos
+    INNER JOIN chats ON produtos.id = chats.id_produto
+    INNER JOIN usuarios ON produtos.id_anunciante = usuarios.id
+    INNER JOIN usuarios comprador ON chats.id_interessado = comprador.id;

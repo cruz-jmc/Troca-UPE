@@ -1,11 +1,15 @@
--- Active: 1779383307242@@127.0.0.1@5432@projetodb_jm_leh
+-- Active: 1779383307242@@127.0.0.1@5432@db_troca_upe
 CREATE OR REPLACE FUNCTION fn_fecha_chats_produto_vendido()
 RETURNS TRIGGER AS $$
 BEGIN
+    -- Verifica se o produto mudou para vendido
     IF OLD.status <> 'Trocado/Vendido' AND NEW.status = 'Trocado/Vendido' THEN
+       
+       -- Atualiza os chats abertos daquele produto específico
        UPDATE chats
-       SET status = 'Fechado'::status_chat
-       WHERE id = NEW.id_produto AND status = 'Aberto' :: status_chat;
+       SET status = 'Fechado'
+       WHERE id_produto = NEW.id AND status = 'Aberto';
+       
     END IF;
     RETURN NEW;
 END;
