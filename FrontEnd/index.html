@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPE Desapego - Vitrine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <nav class="bg-blue-700 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold flex items-center gap-2">🔄 UPE Desapego</h1>
+            <div class="flex gap-4">
+                <a href="chat.html" class="hover:underline font-medium">💬 Ir para o Chat Geral</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto my-8 p-4 max-w-6xl">
+        
+        <div class="bg-white p-6 rounded-lg shadow-md mb-8 border border-gray-200">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800">📢 Anunciar Novo Desapego</h3>
+                <div class="flex items-center gap-2 bg-gray-50 p-2 rounded border">
+                    <label class="text-xs font-bold text-gray-600 uppercase">Seu ID de Vendedor:</label>
+                    <input type="number" id="idAnuncianteForm" value="1" class="w-16 p-1 border rounded text-center outline-none focus:ring-2 focus:ring-blue-500 font-bold text-blue-700">
+                </div>
+            </div>
+
+            <form id="formCadastro" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <input type="text" id="nome" placeholder="Nome do Produto (ex: Livro de Cálculo)" required 
+                       class="p-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-500">
+                
+                <input type="text" id="descricao" placeholder="Descrição breve do estado" required 
+                       class="p-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-500">
+                
+                <input type="number" id="preco" placeholder="Preço (R$)" step="0.01" required 
+                       class="p-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-500">
+                
+                <select id="categoria" required class="p-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="" disabled selected>Selecione a Categoria</option>
+                    <option value="Livros">Livros</option>
+                    <option value="Eletrodomesticos">Eletrodomésticos</option>
+                    <option value="Moveis">Móveis</option>
+                    <option value="Material Escolar">Material Escolar</option>
+                    <option value="Outros">Outros</option>
+                </select>
+
+                <select id="condicao" required class="p-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="" disabled selected>Condição do Item</option>
+                    <option value="Novo">Novo</option>
+                    <option value="Semi-novo">Semi-novo</option>
+                    <option value="Usado (Otimo Estado)">Usado (Ótimo Estado)</option>
+                    <option value="Usado (Marcas de Uso)">Usado (Marcas de Uso)</option>
+                </select>
+
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition shadow">
+                    🚀 Cadastrar Desapego
+                </button>
+            </form>
+        </div>
+
+        <hr class="my-6 border-gray-300">
+
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-3xl font-bold text-gray-800">📦 Vitrine de Desapegos</h2>
+            <button onclick="carregarProdutos()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition">
+                🔄 Atualizar Feed
+            </button>
+        </div>
+
+        <div id="feedProdutos" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            </div>
+    </div>
+
+    <script>
+        const API_URL = "http://127.0.0.1:8000";
+
+        async function carregarProdutos() {
+            const feed = document.getElementById('feedProdutos');
+            try {
+                const response = await fetch(`${API_URL}/produtos/`);
+                if (!response.ok) throw new Error();
+                
+                const produtos = await response.json();
+                feed.innerHTML = '';
+
+                if (produtos.length === 0) {
+                    feed.innerHTML = `<p class="text-gray-500 text-center col-span-3 italic">Nenhum produto disponível no momento.</p>`;
+                    return;
+                }
+
+                // Usando o index (i) para garantir ID 1, ID 2, ID 3 sequenciais e organizados
+                produtos.forEach((p, index) => {
+                    const idVendedor = p.id_anunciante || p.id_usuario || 1;
+                    const idAnuncio = p.id || p.id_produto || (index + 1);
+
+                    const card = `
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 flex flex-col justify-between">
+                            <div class="p-4">
+                                <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded">${p.produto_categoria}</span>
+                                <h3 class="text-xl font-bold text-gray-900 mt-2">${p.produto_nome}</h3>
+                                <p class="text-gray-600 text-sm mt-1 line-clamp-2">${p.produto_descricao}</p>
+                                <div class="mt-4 flex justify-between items-center text-xs text-gray-500 mb-2">
+                                    <span>📍 ${p.campus_nome || 'UPE'}</span>
+                                    <span>🎓 ${p.curso_nome || 'Geral'}</span>
+                                </div>
+                                <div class="bg-gray-50 p-1.5 rounded text-[11px] text-gray-500 flex justify-between font-mono">
+                                    <span>Vendedor ID: <b>${idVendedor}</b></span>
+                                    <span>Anúncio ID: <b>${idAnuncio}</b></span>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-gray-50 border-t flex justify-between items-center">
+                                <span class="text-2xl font-black text-blue-700">R$ ${parseFloat(p.produto_preco).toFixed(2)}</span>
+                                <button onclick="interessarNoProduto(${idVendedor}, ${idAnuncio})" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded transition text-sm shadow">
+                                    🤝 Interesse
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    feed.innerHTML += card;
+                });
+            } catch (error) {
+                feed.innerHTML = `<p class="text-red-500 text-center col-span-3 font-medium">Erro ao carregar os dados da API. Certifique-se de que o backend está rodando!</p>`;
+            }
+        }
+
+        // Pergunta o ID do Comprador e envia os dados para a página de chat
+        function interessarNoProduto(idVendedor, idAnuncio) {
+            const meuIdComprador = prompt("Para iniciar o chat, digite o SEU ID de usuário (Comprador):", "2");
+            
+            // Se o usuário digitou algo e não cancelou
+            if (meuIdComprador !== null && meuIdComprador.trim() !== "") {
+                window.location.href = `chat.html?vendedor=${idVendedor}&anuncio=${idAnuncio}&comprador=${meuIdComprador.trim()}`;
+            }
+        }
+
+        document.getElementById('formCadastro').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const payload = {
+                nome: document.getElementById('nome').value,
+                descricao: document.getElementById('descricao').value,
+                preco: parseFloat(document.getElementById('preco').value),
+                categoria: document.getElementById('categoria').value,
+                condicao: document.getElementById('condicao').value,
+                id_anunciante: parseInt(document.getElementById('idAnuncianteForm').value) || 1 
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/produtos/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    document.getElementById('formCadastro').reset();
+                    carregarProdutos();
+                } else {
+                    alert("Erro ao cadastrar no banco de dados.");
+                }
+            } catch (error) {
+                alert("Não foi possível conectar à API. Verifique o servidor Python.");
+            }
+        });
+
+        window.onload = carregarProdutos;
+    </script>
+</body>
+</html>
