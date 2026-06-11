@@ -47,57 +47,57 @@ _Abaixo está a estrutura de documentação das tabelas do banco de dados._
 
 ### 1. Tabela: `campus`
 
-| Coluna | Tipo | Restrição / Regra | Descrição |
-| :--- | :--- | :--- | :--- |
-| **id** | SERIAL | PRIMARY KEY | Identificador único do campus |
-| **nome** | VARCHAR(100) | NOT NULL UNIQUE | Nome do campus |
-| **cidade** | VARCHAR(50) | NOT NULL | Cidade onde o campus se localiza |
+| Coluna     | Tipo         | Restrição / Regra | Descrição                        |
+| :--------- | :----------- | :---------------- | :------------------------------- |
+| **id**     | SERIAL       | PRIMARY KEY       | Identificador único do campus    |
+| **nome**   | VARCHAR(100) | NOT NULL UNIQUE   | Nome do campus                   |
+| **cidade** | VARCHAR(50)  | NOT NULL          | Cidade onde o campus se localiza |
 
 ### 2. Tabela: `cursos`
 
-| Coluna | Tipo | Restrição / Regra | Descrição |
-| :--- | :--- | :--- | :--- |
-| **id** | SERIAL | PRIMARY KEY | Identificador único do curso |
-| **nome** | VARCHAR(100) | NOT NULL | Nome do curso |
-| **id_campus** | INTEGER | NOT NULL | Identificador do campus |
+| Coluna        | Tipo         | Restrição / Regra | Descrição                    |
+| :------------ | :----------- | :---------------- | :--------------------------- |
+| **id**        | SERIAL       | PRIMARY KEY       | Identificador único do curso |
+| **nome**      | VARCHAR(100) | NOT NULL          | Nome do curso                |
+| **id_campus** | INTEGER      | NOT NULL          | Identificador do campus      |
 
 ### 3. Tabela: `usuarios`
 
-| Coluna | Tipo | Restrição / Regra | Descrição |
-| :--- | :--- | :--- | :--- |
-| **id** | SERIAL | PRIMARY KEY | Identificador único do usuário |
-| **nome** | VARCHAR(100) | NOT NULL | Nome completo do estudante |
-| **email_institucional** | VARCHAR(150) | NOT NULL UNIQUE | E-mail institucional obrigatório |
-| **telefone** | VARCHAR(50) | NOT NULL UNIQUE | Telefone do estudante |
-| **periodo_atual** | INTEGER | NOT NULL | Período acadêmico atual |
-| **status_conta** | tipo_status_conta(ENUM) | NOT NULL DEFAULT 'Ativo' | Situação da conta |
-| **id_curso** | INTEGER | NOT NULL | Identificador do curso |
-| **id_campus** | INTEGER | NOT NULL | Identificador do campus |
+| Coluna                  | Tipo                    | Restrição / Regra        | Descrição                        |
+| :---------------------- | :---------------------- | :----------------------- | :------------------------------- |
+| **id**                  | SERIAL                  | PRIMARY KEY              | Identificador único do usuário   |
+| **nome**                | VARCHAR(100)            | NOT NULL                 | Nome completo do estudante       |
+| **email_institucional** | VARCHAR(150)            | NOT NULL UNIQUE          | E-mail institucional obrigatório |
+| **telefone**            | VARCHAR(50)             | NOT NULL UNIQUE          | Telefone do estudante            |
+| **periodo_atual**       | INTEGER                 | NOT NULL                 | Período acadêmico atual          |
+| **status_conta**        | tipo_status_conta(ENUM) | NOT NULL DEFAULT 'Ativo' | Situação da conta                |
+| **id_curso**            | INTEGER                 | NOT NULL                 | Identificador do curso           |
+| **id_campus**           | INTEGER                 | NOT NULL                 | Identificador do campus          |
 
 ### 4. Tabela: `produtos`
 
-| Coluna | Tipo | Restrição / Regra | Descrição |
-| :--- | :--- | :--- | :--- |
-| **id** | SERIAL | PRIMARY KEY | Identificador único do produto |
-| **nome** | VARCHAR(100) | NOT NULL | Nome do produto |
-| **descricao** | TEXT | NOT NULL | Descrição do produto cadastrado |
-| **preco** | DECIMAL(10, 2) | NOT NULL | Preço do produto |
-| **categoria** | tipo_categoria_produto(ENUM) | NOT NULL | Categoria do produto |
-| **condicao** | tipo_condicao_produto(ENUM) | NOT NULL | Estado do produto |
-| **status** | tipo_status_produto(ENUM) | NOT NULL DEFAULT 'Disponivel' | Situação do produto |
-| **data_criacao** | TIMESTAMP | NOT NULL DEFAULT CURRENT_TIMESTAMP | Data exata do cadastro do produto |
-| **data_atualizacao** | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Data exata da atualização |
-| **id_anunciante** | INTEGER | NOT NULL | Identificador do usuário |
+| Coluna               | Tipo                         | Restrição / Regra                  | Descrição                         |
+| :------------------- | :--------------------------- | :--------------------------------- | :-------------------------------- |
+| **id**               | SERIAL                       | PRIMARY KEY                        | Identificador único do produto    |
+| **nome**             | VARCHAR(100)                 | NOT NULL                           | Nome do produto                   |
+| **descricao**        | TEXT                         | NOT NULL                           | Descrição do produto cadastrado   |
+| **preco**            | DECIMAL(10, 2)               | NOT NULL                           | Preço do produto                  |
+| **categoria**        | tipo_categoria_produto(ENUM) | NOT NULL                           | Categoria do produto              |
+| **condicao**         | tipo_condicao_produto(ENUM)  | NOT NULL                           | Estado do produto                 |
+| **status**           | tipo_status_produto(ENUM)    | NOT NULL DEFAULT 'Disponivel'      | Situação do produto               |
+| **data_criacao**     | TIMESTAMP                    | NOT NULL DEFAULT CURRENT_TIMESTAMP | Data exata do cadastro do produto |
+| **data_atualizacao** | TIMESTAMP                    | DEFAULT CURRENT_TIMESTAMP          | Data exata da atualização         |
+| **id_anunciante**    | INTEGER                      | NOT NULL                           | Identificador do usuário          |
 
 ### 5. Tabela: `chats`
 
-| Coluna | Tipo | Restrição / Regra | Descrição |
-| :--- | :--- | :--- | :--- |
-| **id** | SERIAL | PRIMARY KEY | Identificador único do chat |
-| **data_abertura** | TIMESTAMP | NOT NULL DEFAULT CURRENT_TIMESTAMP | Data exata da abertura do chat |
-| **id_produto** | INTEGER | NOT NULL | Identificador do produto |
-| **status** | tipo_status_produto(ENUM) | NOT NULL DEFAULT 'Disponivel' | Situação do chat |
-| **id_interessado** | INTEGER | NOT NULL | Identificador do usuário |
+| Coluna             | Tipo                      | Restrição / Regra                  | Descrição                      |
+| :----------------- | :------------------------ | :--------------------------------- | :----------------------------- |
+| **id**             | SERIAL                    | PRIMARY KEY                        | Identificador único do chat    |
+| **data_abertura**  | TIMESTAMP                 | NOT NULL DEFAULT CURRENT_TIMESTAMP | Data exata da abertura do chat |
+| **id_produto**     | INTEGER                   | NOT NULL                           | Identificador do produto       |
+| **status**         | tipo_status_produto(ENUM) | NOT NULL DEFAULT 'Disponivel'      | Situação do chat               |
+| **id_interessado** | INTEGER                   | NOT NULL                           | Identificador do usuário       |
 
 ### 📌 Regras de Negócio Adicionais (Tabela Chats)
 
@@ -108,13 +108,13 @@ _Abaixo está a estrutura de documentação das tabelas do banco de dados._
 
 ### 6. Tabela: `mensagens`
 
-| Coluna | Tipo | Restrição / Regra | Descrição |
-| :--- | :--- | :--- | :--- |
-| **id** | SERIAL | PRIMARY KEY | Identificador único da mensagem |
-| **texto** | TEXT | NOT NULL | Conteudo da mensagem |
-| **enviado_em** | TIMESTAMP | NOT NULL DEFAULT CURRENT_TIMESTAMP | Data exatada do envio da mensagem |
-| **id_chat** | INTEGER | NOT NULL | Identificador do chat |
-| **id_remetente** | INTEGER | NOT NULL | Identificador do usuário |
+| Coluna           | Tipo      | Restrição / Regra                  | Descrição                         |
+| :--------------- | :-------- | :--------------------------------- | :-------------------------------- |
+| **id**           | SERIAL    | PRIMARY KEY                        | Identificador único da mensagem   |
+| **texto**        | TEXT      | NOT NULL                           | Conteudo da mensagem              |
+| **enviado_em**   | TIMESTAMP | NOT NULL DEFAULT CURRENT_TIMESTAMP | Data exatada do envio da mensagem |
+| **id_chat**      | INTEGER   | NOT NULL                           | Identificador do chat             |
+| **id_remetente** | INTEGER   | NOT NULL                           | Identificador do usuário          |
 
 ---
 
@@ -174,7 +174,7 @@ Antes de rodar os comandos, certifique-se de possuir instalado em seu computador
 
 Abra o terminal do seu sistema operacional (ou o terminal embutido do VS Code) e faça o clone do projeto:
 
-```bash
+````bash
 git clone https://github.com/cruz-jmc/Troca-UPE.git
 cd Troca-UPE
 
@@ -187,7 +187,7 @@ Abra o terminal do seu sistema operacional (ou o terminal embutido do VS Code) e
 ```bash
 git clone [https://github.com/cruz-jmc/Troca-UPE.git](https://github.com/cruz-jmc/Troca-UPE.git)
 cd Troca-UPE
-```
+````
 
 #### Passo 2: Levantar a Infraestrutura do Banco de Dados (Docker)
 
@@ -276,6 +276,7 @@ A API gera automaticamente uma interface gráfica para você testar todas as ope
         Mensagens do Chat: Envio e persistência de históricos de conversas em tempo real.
 
         Dashboard & Relatórios: Consumo imediato das Views estatísticas (vw_ranking_campi_ativos, vw_demanda_por_categoria, vw_metrica_economia_comunidade, etc.).
+
 ---
 
 ### 💻 Executando e Testando o Frontend
@@ -289,10 +290,13 @@ A interface gráfica consome as rotas da API local em tempo real. Para rodar e t
 
 ---
 
-## 👥 Integrantes do Projeto
+## Autores
 
-    Letícia Guardiola de Abreus
+- **João Marcelo Cruz Coelho** - [Seu GitHub](https://github.com/cruz-jmc)
+- **Letícia Guardiola de Abreus** - [GitHub do Coautor](https://github.com/leticiaguardiolaabreus-gif)
 
-    João Marcelo Cruz Coelho
+## Licença
+
+Este projeto está sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
 
 Projeto desenvolvido para a disciplina de Banco de Dados — Universidade de Pernambuco (UPE).
