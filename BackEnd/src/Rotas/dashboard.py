@@ -17,7 +17,7 @@ def obter_ranking_campi():
             ranking = cursor.fetchall()
             return ranking
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erro ao consultar a view de ranking: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erro ao consultar o ranking de campi ativos: {str(e)}")
     finally:
         conexao.close()
 
@@ -33,7 +33,7 @@ def obter_demanda_categorias():
             demanda = cursor.fetchall()
             return demanda
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erro ao consultar a view de demanda por categoria: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erro ao consultar as demandas por categoria: {str(e)}")
     finally:
         conexao.close()
 
@@ -49,7 +49,7 @@ def obter_historico_conversas():
             historico = cursor.fetchall()
             return historico
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erro ao consultar a view de histórico de conversas: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erro ao consultar o histórico de conversas: {str(e)}")
     finally:
         conexao.close()
 
@@ -65,7 +65,7 @@ def obter_usuarios_bloqueados():
             bloqueados = cursor.fetchall()
             return bloqueados
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erro ao consultar a view de usuários bloqueados: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erro ao consultar os usuários bloqueados: {str(e)}")
     finally:
         conexao.close()
 
@@ -83,6 +83,6 @@ def obter_economia_comunidade():
             economia = cursor.fetchone()
             return economia
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erro ao consultar a view de economia da comunidade: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erro ao consultar a métrica de economia da comunidade: {str(e)}")
     finally:
         conexao.close()

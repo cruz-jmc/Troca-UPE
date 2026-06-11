@@ -101,7 +101,7 @@ def obter_perfil_usuario(id_usuario: int):
             resultado = cursor.fetchone()
             
             if not resultado:
-                raise HTTPException(status_code=404, detail="Usuário não encontrado nesta visão.")
+                raise HTTPException(status_code=404, detail="Usuário não encontrado.")
                 
             dados_usuario = {
                 "id": resultado["usuario_id"],

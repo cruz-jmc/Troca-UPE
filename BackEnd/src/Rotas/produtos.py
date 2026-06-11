@@ -88,7 +88,7 @@ def listar_produtos_disponiveis(
             return produtos
             
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erro ao consultar a View de disponíveis: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erro ao consultar os produtos disponíveis: {str(e)}")
     finally:
         conexao.close()
 
@@ -110,7 +110,7 @@ def listar_ultimos_anuncios_24h():
             return anuncios_recentes if anuncios_recentes else []
             
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erro ao consultar a View de anúncios recentes: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erro ao consultar os anúncios recentes: {str(e)}")
     finally:
         conexao.close()
 
@@ -130,7 +130,7 @@ def concluir_negociacao(id_produto: int):
                 "mensagem": f"Negociação do produto {id_produto} concluída e retirada do catálogo!"
             }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erro ao executar procedure: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erro ao executar concluir negociação: {str(e)}")
     finally:
         conexao.close()
 
@@ -147,7 +147,7 @@ def limpar_anuncios_antigos():
             cursor.execute("CALL proc_limpar_anuncios_antigos();")
             return {
                 "status": "sucesso",
-                "mensagem": "Procedure de limpeza de anúncios com mais de 180 dias executada com sucesso!"
+                "mensagem": "Limpeza de anúncios com mais de 180 dias executada com sucesso!"
             }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao executar a limpeza: {str(e)}")
