@@ -47,59 +47,57 @@ _Abaixo está a estrutura de documentação das tabelas do banco de dados._
 
 ### 1. Tabela: `campus`
 
-| Coluna | Tipo | Restrição / Regra | Descrição |
-| :--- | :--- | :--- | :--- |
-| **id** | SERIAL | PRIMARY KEY | Identificador único do campus |
-| **nome** | VARCHAR(100) | NOT NULL UNIQUE | Nome do campus |
-| **cidade** | VARCHAR(50) | NOT NULL | Cidade onde o campus se localiza |
+| Coluna     | Tipo         | Restrição / Regra | Descrição                        |
+| :--------- | :----------- | :---------------- | :------------------------------- |
+| **id**     | SERIAL       | PRIMARY KEY       | Identificador único do campus    |
+| **nome**   | VARCHAR(100) | NOT NULL UNIQUE   | Nome do campus                   |
+| **cidade** | VARCHAR(50)  | NOT NULL          | Cidade onde o campus se localiza |
 
 ### 2. Tabela: `cursos`
 
-| Coluna | Tipo | Restrição / Regra | Descrição |
-| :--- | :--- | :--- | :--- |
-| **id** | SERIAL | PRIMARY KEY | Identificador único do curso |
-| **nome** | VARCHAR(100) | NOT NULL | Nome do curso |
-| **id_campus** | INTEGER | NOT NULL | Identificador do campus |
+| Coluna        | Tipo         | Restrição / Regra | Descrição                    |
+| :------------ | :----------- | :---------------- | :--------------------------- |
+| **id**        | SERIAL       | PRIMARY KEY       | Identificador único do curso |
+| **nome**      | VARCHAR(100) | NOT NULL          | Nome do curso                |
+| **id_campus** | INTEGER      | NOT NULL          | Identificador do campus      |
 
 ### 3. Tabela: `usuarios`
 
-| Coluna | Tipo | Restrição / Regra | Descrição |
-| :--- | :--- | :--- | :--- |
-| **id** | SERIAL | PRIMARY KEY | Identificador único do usuário |
-| **nome** | VARCHAR(100) | NOT NULL | Nome completo do estudante |
-| **email_institucional** | VARCHAR(150) | NOT NULL UNIQUE | E-mail institucional obrigatório |
-| **telefone** | VARCHAR(50) | NOT NULL UNIQUE | Telefone do estudante |
-| **periodo_atual** | INTEGER | NOT NULL | Período acadêmico atual |
-| **status_conta** | tipo_status_conta(ENUM) | NOT NULL DEFAULT 'Ativo' | Situação da conta |
-| **id_curso** | INTEGER | NOT NULL | Identificador do curso |
-| **id_campus** | INTEGER | NOT NULL | Identificador do campus |
+| Coluna                  | Tipo                    | Restrição / Regra        | Descrição                        |
+| :---------------------- | :---------------------- | :----------------------- | :------------------------------- |
+| **id**                  | SERIAL                  | PRIMARY KEY              | Identificador único do usuário   |
+| **nome**                | VARCHAR(100)            | NOT NULL                 | Nome completo do estudante       |
+| **email_institucional** | VARCHAR(150)            | NOT NULL UNIQUE          | E-mail institucional obrigatório |
+| **telefone**            | VARCHAR(50)             | NOT NULL UNIQUE          | Telefone do estudante            |
+| **periodo_atual**       | INTEGER                 | NOT NULL                 | Período acadêmico atual          |
+| **status_conta**        | tipo_status_conta(ENUM) | NOT NULL DEFAULT 'Ativo' | Situação da conta                |
+| **id_curso**            | INTEGER                 | NOT NULL                 | Identificador do curso           |
+| **id_campus**           | INTEGER                 | NOT NULL                 | Identificador do campus          |
 
 ### 4. Tabela: `produtos`
 
-| Coluna | Tipo | Restrição / Regra | Descrição |
-| :--- | :--- | :--- | :--- |
-| **id** | SERIAL | PRIMARY KEY | Identificador único do produto |
-| **nome** | VARCHAR(100) | NOT NULL | Nome do produto |
-| **descricao** | TEXT | NOT NULL | Descrição do produto cadastrado |
-| **preco** | DECIMAL(10, 2) | NOT NULL | Preço do produto |
-| **categoria** | tipo_categoria_produto(ENUM) | NOT NULL | Categoria do produto |
-| **condicao** | tipo_condicao_produto(ENUM) | NOT NULL | Estado do produto |
-| **status** | tipo_status_produto(ENUM) | NOT NULL DEFAULT 'Disponivel' | Situação do produto |
-| **data_criacao** | TIMESTAMP | NOT NULL DEFAULT CURRENT_TIMESTAMP | Data exata do cadastro do produto |
-| **data_atualizacao** | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Data exata da atualização |
-| **id_anunciante** | INTEGER | NOT NULL | Identificador do usuário |
+| Coluna               | Tipo                         | Restrição / Regra                  | Descrição                         |
+| :------------------- | :--------------------------- | :--------------------------------- | :-------------------------------- |
+| **id**               | SERIAL                       | PRIMARY KEY                        | Identificador único do produto    |
+| **nome**             | VARCHAR(100)                 | NOT NULL                           | Nome do produto                   |
+| **descricao**        | TEXT                         | NOT NULL                           | Descrição do produto cadastrado   |
+| **preco**            | DECIMAL(10, 2)               | NOT NULL                           | Preço do produto                  |
+| **categoria**        | tipo_categoria_produto(ENUM) | NOT NULL                           | Categoria do produto              |
+| **condicao**         | tipo_condicao_produto(ENUM)  | NOT NULL                           | Estado do produto                 |
+| **status**           | tipo_status_produto(ENUM)    | NOT NULL DEFAULT 'Disponivel'      | Situação do produto               |
+| **data_criacao**     | TIMESTAMP                    | NOT NULL DEFAULT CURRENT_TIMESTAMP | Data exata do cadastro do produto |
+| **data_atualizacao** | TIMESTAMP                    | DEFAULT CURRENT_TIMESTAMP          | Data exata da atualização         |
+| **id_anunciante**    | INTEGER                      | NOT NULL                           | Identificador do usuário          |
 
 ### 5. Tabela: `chats`
 
-| Coluna | Tipo | Restrição / Regra | Descrição |
-| :--- | :--- | :--- | :--- |
-| **id** | SERIAL | PRIMARY KEY | Identificador único do chat |
-| **data_abertura** | TIMESTAMP | NOT NULL DEFAULT CURRENT_TIMESTAMP | Data exata da abertura do chat |
-| **id_produto** | INTEGER | NOT NULL | Identificador do produto |
-| **status** | tipo_status_produto(ENUM) | NOT NULL DEFAULT 'Disponivel' | Situação do chat |
-| **id_interessado** | INTEGER | NOT NULL | Identificador do usuário |
-
-
+| Coluna             | Tipo                      | Restrição / Regra                  | Descrição                      |
+| :----------------- | :------------------------ | :--------------------------------- | :----------------------------- |
+| **id**             | SERIAL                    | PRIMARY KEY                        | Identificador único do chat    |
+| **data_abertura**  | TIMESTAMP                 | NOT NULL DEFAULT CURRENT_TIMESTAMP | Data exata da abertura do chat |
+| **id_produto**     | INTEGER                   | NOT NULL                           | Identificador do produto       |
+| **status**         | tipo_status_produto(ENUM) | NOT NULL DEFAULT 'Disponivel'      | Situação do chat               |
+| **id_interessado** | INTEGER                   | NOT NULL                           | Identificador do usuário       |
 
 ### 📌 Regras de Negócio Adicionais (Tabela Chats)
 
@@ -110,13 +108,13 @@ _Abaixo está a estrutura de documentação das tabelas do banco de dados._
 
 ### 6. Tabela: `mensagens`
 
-| Coluna | Tipo | Restrição / Regra | Descrição |
-| :--- | :--- | :--- | :--- |
-| **id** | SERIAL | PRIMARY KEY | Identificador único da mensagem |
-| **texto** | TEXT | NOT NULL | Conteudo da mensagem |
-| **enviado_em** | TIMESTAMP | NOT NULL DEFAULT CURRENT_TIMESTAMP | Data exatada do envio da mensagem |
-| **id_chat** | INTEGER | NOT NULL | Identificador do chat |
-| **id_remetente** | INTEGER | NOT NULL | Identificador do usuário |
+| Coluna           | Tipo      | Restrição / Regra                  | Descrição                         |
+| :--------------- | :-------- | :--------------------------------- | :-------------------------------- |
+| **id**           | SERIAL    | PRIMARY KEY                        | Identificador único da mensagem   |
+| **texto**        | TEXT      | NOT NULL                           | Conteudo da mensagem              |
+| **enviado_em**   | TIMESTAMP | NOT NULL DEFAULT CURRENT_TIMESTAMP | Data exatada do envio da mensagem |
+| **id_chat**      | INTEGER   | NOT NULL                           | Identificador do chat             |
+| **id_remetente** | INTEGER   | NOT NULL                           | Identificador do usuário          |
 
 ---
 
@@ -176,7 +174,7 @@ Antes de rodar os comandos, certifique-se de possuir instalado em seu computador
 
 Abra o terminal do seu sistema operacional (ou o terminal embutido do VS Code) e faça o clone do projeto:
 
-```bash
+````bash
 git clone https://github.com/cruz-jmc/Troca-UPE.git
 cd Troca-UPE
 
@@ -189,7 +187,7 @@ Abra o terminal do seu sistema operacional (ou o terminal embutido do VS Code) e
 ```bash
 git clone [https://github.com/cruz-jmc/Troca-UPE.git](https://github.com/cruz-jmc/Troca-UPE.git)
 cd Troca-UPE
-```
+````
 
 #### Passo 2: Levantar a Infraestrutura do Banco de Dados (Docker)
 
@@ -243,7 +241,7 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-Passo 6: Inicializar o Servidor de Aplicação (Uvicorn)
+#### Passo 6: Inicializar o Servidor de Aplicação (Uvicorn)
 
 Execute o servidor de desenvolvimento apontando diretamente para o arquivo core da aplicação (src/main.py) com a flag de auto-reload ativa:
 
@@ -278,6 +276,7 @@ A API gera automaticamente uma interface gráfica para você testar todas as ope
         Mensagens do Chat: Envio e persistência de históricos de conversas em tempo real.
 
         Dashboard & Relatórios: Consumo imediato das Views estatísticas (vw_ranking_campi_ativos, vw_demanda_por_categoria, vw_metrica_economia_comunidade, etc.).
+
 ---
 
 ### 💻 Executando e Testando o Frontend
@@ -288,6 +287,30 @@ A interface gráfica consome as rotas da API local em tempo real. Para rodar e t
 2. **Cadastrar um Produto:** Na Vitrine, defina o seu **ID de Vendedor** no topo e cadastre um item. O card surgirá na tela mostrando o **Anúncio ID** em ordem sequencial (1, 2, 3...).
 3. **Iniciar o Chat:** Clique no botão **`🤝 Interesse`** em qualquer produto da vitrine.
 4. **Conectar os IDs:** Uma caixinha na tela perguntará o seu **ID de Comprador**. Digite um número e confirme. Você será levado direto para a sala de chat (`chat.html`) com todos os IDs conectados automaticamente.
+
+---
+
+## Como Executar e Testar o Projeto (Para o professor)
+
+Para facilitar a avaliação das regras de negócio nativas do banco (Views, Triggers e Procedures), o ambiente foi projetado para rodar o PostgreSQL isolado no Docker, enquanto a API e os testes rodam localmente. Siga os passos abaixo:
+
+1. **Subir o Banco de Dados (Docker):** Na pasta `DB/`, execute o comando abaixo para iniciar o contêiner do PostgreSQL. Ele executará automaticamente os scripts de criação de tabelas, triggers, procedures e inserção de dados fictícios:
+
+   ```bash
+   docker compose down -v && docker compose up
+   ```
+
+2. **Iniciar a API (BackEnd):** Em um novo terminal, navegue até a pasta BackEnd/, ative seu ambiente virtual e inicie o servidor da aplicação:
+
+   ```bash
+   uvicorn src.main:app --reload
+   ```
+
+3. **Rodar os Testes Automatizados:** Em um terceiro terminal, ainda na pasta BackEnd/, execute o script de testes para validar o ecossistema completo (conexão com o Swagger, criação de chats, consumo de Views do Dashboard, disparo automático de Triggers e execução de Procedures):
+
+   ```bash
+   python testes/test_main.py
+   ```
 
 ---
 
