@@ -1,13 +1,92 @@
--- 1. Remove os usuários antigos para liberar os e-mails UNIQUE
 DELETE FROM usuarios;
 
--- 2. Reseta o contador para os IDs começarem do 1 de novo
 ALTER SEQUENCE usuarios_id_seq RESTART WITH 1;
 
--- 3. Insere os novos usuários com os IDs automáticos certinhos
-INSERT INTO usuarios (nome, email_institucional, telefone, periodo_atual, status_conta, id_curso, id_campus) VALUES
-('Letícia Abreu', 'leticia.abreu@upe.br', '81999991111', 4, 'Ativo', 1, (SELECT id FROM campus WHERE nome = 'UPE - Campus Benfica' LIMIT 1)),
-('João Marcelo', 'joao.cruz@upe.br', '81999992222', 4, 'Ativo', 1, (SELECT id FROM campus WHERE nome = 'UPE - Campus Benfica' LIMIT 1)),
-('Lucas Silva', 'lucas.silva@upe.br', '81999993333', 2, 'Ativo', 2, (SELECT id FROM campus WHERE nome = 'UPE - Campus Benfica' LIMIT 1)),
-('Mariana Costa', 'mariana.costa@upe.br', '87988885555', 6, 'Ativo', 5, (SELECT id FROM campus WHERE nome = 'UPE - Campus Petrolina' LIMIT 1)),
-('Aluno Spam', 'spam.aluno@upe.br', '81999994444', 1, 'Bloqueado', 3, (SELECT id FROM campus WHERE nome = 'UPE - Campus Benfica' LIMIT 1));
+INSERT INTO
+    usuarios (
+        nome,
+        email_institucional,
+        telefone,
+        periodo_atual,
+        status_conta,
+        id_curso,
+        id_campus
+    )
+VALUES (
+        'Letícia Abreu',
+        'leticia.abreu@upe.br',
+        '81999991111',
+        4,
+        'Ativo',
+        (
+            SELECT id
+            FROM cursos
+            WHERE
+                nome = 'Engenharia de Software'
+                AND id_campus = (
+                    SELECT id
+                    FROM campus
+                    WHERE
+                        nome = 'UPE - Benfica (POLI / FCAP)'
+                )
+            LIMIT 1
+        ),
+        (
+            SELECT id
+            FROM campus
+            WHERE
+                nome = 'UPE - Benfica (POLI / FCAP)'
+        )
+    ),
+    (
+        'João Marcelo',
+        'joao.cruz@upe.br',
+        '81999992222',
+        4,
+        'Ativo',
+        (
+            SELECT id
+            FROM cursos
+            WHERE
+                nome = 'Engenharia de Software'
+                AND id_campus = (
+                    SELECT id
+                    FROM campus
+                    WHERE
+                        nome = 'UPE - Benfica (POLI / FCAP)'
+                )
+            LIMIT 1
+        ),
+        (
+            SELECT id
+            FROM campus
+            WHERE
+                nome = 'UPE - Benfica (POLI / FCAP)'
+        )
+    ),
+    (
+        'Lucas Silva',
+        'lucas.silva@upe.br',
+        '81999993333',
+        2,
+        'Ativo',
+        (
+            SELECT id
+            FROM cursos
+            WHERE
+                nome = 'Administração'
+                AND id_campus = (
+                    SELECT id
+                    FROM campus
+                    WHERE
+                        nome = 'UPE - Benfica (POLI / FCAP)'
+                )
+            LIMIT 1
+        ),
+        (
+            SELECT id
+            FROM campus
+            WHERE
+                nome = 'UPE - Benfica (POLI / FCAP)'
+        )
+    );

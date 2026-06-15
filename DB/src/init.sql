@@ -30,6 +30,10 @@
 \i /docker-entrypoint-initdb.d/04_Procedures/01_proc_concluir_negociacao.sql
 \i /docker-entrypoint-initdb.d/04_Procedures/02_proc_limpar_anuncios_antigos.sql
 
--- Inserção de dados obrigatórios para testes e funcionamento do sistema
+-- Inserção de dados fictícios para testes e funcionamento do sistema
 \i /docker-entrypoint-initdb.d/05_Dados_ficticios_teste/01_insets_campus.sql
 \i /docker-entrypoint-initdb.d/05_Dados_ficticios_teste/02_inserts_cursos.sql
+\i /docker-entrypoint-initdb.d/05_Dados_ficticios_teste/03_inserts_usuarios.sql
+\i /docker-entrypoint-initdb.d/05_Dados_ficticios_teste/04_inserts_produtos.sql
+\i /docker-entrypoint-initdb.d/05_Dados_ficticios_teste/05_inserts_chats.sql
+\i /docker-entrypoint-initdb.d/05_Dados_ficticios_teste/06_inserts_mensagens.sql

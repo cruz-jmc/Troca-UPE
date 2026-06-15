@@ -1,9 +1,66 @@
--- Active: 1779383307242@@127.0.0.1@5432@db_troca_upe
+DELETE FROM cursos;
+
+ALTER SEQUENCE cursos_id_seq RESTART WITH 1;
+
 INSERT INTO
     cursos (nome, id_campus)
-VALUES ('Engenharia de Software', 1), -- 2 = UPE - Benfica (POLI / FCAP)
-    ('Administração', 1), -- 2 = UPE - Benfica (POLI / FCAP)
-    ('Medicina', 2), -- 3 = UPE - Santo Amaro
-    ('Sistemas de Informação', 3), -- 4 = UPE - Caruaru
-    ('Engenharia de Software', 4);
--- 5 = UPE - Garanhuns
+VALUES (
+        'Engenharia de Software',
+        (
+            SELECT id
+            FROM campus
+            WHERE
+                nome = 'UPE - Benfica (POLI / FCAP)'
+            LIMIT 1
+        )
+    ),
+    (
+        'Administração',
+        (
+            SELECT id
+            FROM campus
+            WHERE
+                nome = 'UPE - Benfica (POLI / FCAP)'
+            LIMIT 1
+        )
+    ),
+    (
+        'Medicina',
+        (
+            SELECT id
+            FROM campus
+            WHERE
+                nome = 'UPE - Santo Amaro'
+            LIMIT 1
+        )
+    ),
+    (
+        'Sistemas de Informação',
+        (
+            SELECT id
+            FROM campus
+            WHERE
+                nome = 'UPE - Caruaru'
+            LIMIT 1
+        )
+    ),
+    (
+        'Engenharia de Software',
+        (
+            SELECT id
+            FROM campus
+            WHERE
+                nome = 'UPE - Garanhuns'
+            LIMIT 1
+        )
+    ),
+    (
+        'Engenharia de Software',
+        (
+            SELECT id
+            FROM campus
+            WHERE
+                nome = 'UPE - Campus Petrolina'
+            LIMIT 1
+        )
+    );

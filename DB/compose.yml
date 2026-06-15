@@ -12,7 +12,43 @@ services:
       - postgres_data:/var/lib/postgresql
       # Aqui estamos fazendo o mapeamento dos arquivos SQL para serem executados na inicialização do container,
       # assim, quando o container for iniciado, ele irá executar os scripts SQL presentes nas pastas mapeadas (menos os dados fictícios).
-      - ./src:/docker-entrypoint-initdb.d/
+      - ./DB:/docker-entrypoint-initdb.d
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d db_troca_upe"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
+  # API (FASTAPI) - Sobe automaticamente após o banco estar pronto
+  api:
+    build:
+      context: ./BackEnd
+      dockerfile: Dockerfile
+    container_name: troca_upe_api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://user:password@postgres-db:5432/db_troca_upe
+    # Executa o uvicorn apontando para a pasta src onde está o main.py
+    command: ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+    restart: always
+
+  # TESTES AUTOMATIZADOS - Roda os testes e desliga o container ao terminar
+  testes:
+    build:
+      context: ./BackEnd
+      dockerfile: Dockerfile
+    container_name: troca_upe_testes
+    environment:
+      - BASE_URL=http://api:8000
+    command: ["python", "testes/test_main.py"]
+    depends_on:
+      api:
+        condition: service_started
 
 volumes:
   postgres_data:

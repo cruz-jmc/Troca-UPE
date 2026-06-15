@@ -1,3 +1,7 @@
+DELETE FROM campus;
+
+ALTER SEQUENCE campus_id_seq RESTART WITH 1;
+
 INSERT INTO
     campus (nome, cidade)
 VALUES (
@@ -9,4 +13,8 @@ VALUES (
     (
         'UPE - Garanhuns',
         'Garanhuns'
+    ),
+    (
+        'UPE - Campus Petrolina',
+        'Petrolina'
     );
