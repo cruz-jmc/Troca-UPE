@@ -1,5 +1,7 @@
 # 🚀 Troca-UPE
 
+# OBSERVAÇÃO: O projeto está passando por atualizações ainda não listadas neste arquivo, portanto, o passo a passo para a execução do projeto pode estar desatualizado.
+
 > **Marketplace Acadêmico e Sustentável para a UPE Garanhuns**
 
 O **Troca-UPE** é uma plataforma de marketplace exclusiva para a comunidade acadêmica da Universidade de Pernambuco (UPE). O objetivo principal é incentivar a economia circular e facilitar o acesso a materiais de estudo, permitindo que alunos possam anunciar, vender, trocar ou doar livros, jalecos, calculadoras científicas, materiais de desenho técnico e outros insumos acadêmicos entre os diversos campi (Benfica, Garanhuns, etc.).
